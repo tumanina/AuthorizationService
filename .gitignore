@@ -1,0 +1,11 @@
+.vs/
+AuthorizationService.Api/bin/
+AuthorizationService.Api/obj/AuthorizationService.Api.csproj.nuget.cache
+AuthorizationService.Api/obj/AuthorizationService.Api.csproj.nuget.g.props
+AuthorizationService.Api/obj/AuthorizationService.Api.csproj.nuget.g.targets
+AuthorizationService.Api/obj/
+AuthorizationService.Business/bin/Debug/netcoreapp2.0/AuthorizationService.Business.deps.json
+AuthorizationService.Business/bin/
+AuthorizationService.Business/obj/
+AuthorizationService.Repositories/bin/
+AuthorizationService.Repositories/obj/
