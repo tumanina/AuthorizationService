@@ -9,3 +9,5 @@ AuthorizationService.Business/bin/
 AuthorizationService.Business/obj/
 AuthorizationService.Repositories/bin/
 AuthorizationService.Repositories/obj/
+Tests/AuthorizationService.Unit.Tests/bin/
+Tests/AuthorizationService.Unit.Tests/obj/
