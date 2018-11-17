@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using AuthorizationService.Api.Authorization;
 using AuthorizationService.Business;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -12,6 +13,7 @@ namespace AuthorizationService.Api.Areas.V1.Controllers
     /// Methods for viewing and managing user sessions.
     /// </summary>
     [Route("api/v1/[controller]")]
+    [ManageSessions]
     public class SessionsController : BaseController
     {
         private readonly ISessionService _sessionService;

@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace MultiWallet.UnitTests.ControllerTests
+namespace AuthorizationService.Unit.Tests.ControllerTests
 {
     [TestClass]
     public class SessionsControllerTests

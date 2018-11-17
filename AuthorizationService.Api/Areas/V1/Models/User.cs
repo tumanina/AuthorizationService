@@ -9,7 +9,7 @@ namespace AuthorizationService.Api.Areas.V1.Models
             
         }
 
-        public User(Business.Models.User entity)
+        public User(AuthorizationService.Business.Models.User entity)
         {
             Id = entity.Id;
             IsActive = entity.IsActive;

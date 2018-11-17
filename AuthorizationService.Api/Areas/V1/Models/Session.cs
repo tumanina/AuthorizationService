@@ -4,7 +4,7 @@ namespace AuthorizationService.Api.Areas.V1.Models
 {
     public class Session
     {
-        public Session(Business.Models.Session session)
+        public Session(AuthorizationService.Business.Models.Session session)
         {
             Id = session.Id;
             Ticket = session.Ticket;

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using AuthorizationService.Api.Areas.V1.Models;
 using User = AuthorizationService.Api.Areas.V1.Models.User;
 using AuthorizationService.Business;
 using System.Linq;
+using AuthorizationService.Api.Authorization;
 
 namespace AuthorizationService.Api.Areas.V1.Controllers
 {
@@ -14,6 +14,7 @@ namespace AuthorizationService.Api.Areas.V1.Controllers
     /// Methods for viewing and managing users.
     /// </summary>
     [Route("api/v1/[controller]")]
+    [ManageUsers]
     public class UsersController : BaseController
     {
         private readonly IUserService _userService;
@@ -129,6 +130,7 @@ namespace AuthorizationService.Api.Areas.V1.Controllers
         /// <param name="onlyActive">Show only active sessions</param>
         /// <returns>Execution status (ОК/500) and list of sessions/error info.</returns>
         [HttpGet("own/sessions", Name = "GetUserOwnSessions")]
+        [OwnerAccess]
         public IActionResult GetOwnSessions(bool onlyActive = true)
         {
             try
