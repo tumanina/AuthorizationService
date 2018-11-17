@@ -8,6 +8,7 @@ namespace AuthorizationService.Business
     {
         IEnumerable<Session> GetActiveSessions();
         Session GetSession(Guid id);
+        Session GetSessionByTicket(string ticket);
         bool ProlongSession(Guid id);
         Session CreateSession(Guid userId, int interval, string ip);
         Session CloseSession(Guid id);

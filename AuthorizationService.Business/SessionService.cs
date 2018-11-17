@@ -24,9 +24,16 @@ namespace AuthorizationService.Business
 
         public Session GetSession(Guid id)
         {
-            var node = _sessionRepository.GetSession(id);
+            var session = _sessionRepository.GetSession(id);
 
-            return node == null ? null : new Session(node);
+            return session == null ? null : new Session(session);
+        }
+
+        public Session GetSessionByTicket(string ticket)
+        {
+            var session = _sessionRepository.GetSessionByTicket(ticket);
+
+            return session == null ? null : new Session(session);
         }
 
         public bool ProlongSession(Guid id)

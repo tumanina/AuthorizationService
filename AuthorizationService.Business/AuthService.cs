@@ -8,12 +8,12 @@ namespace AuthorizationService.Business
 {
     public class AuthService : IAuthService
     {
-        private readonly ISessionRepository _sessionRepository;
+        private readonly ISessionService _sessionService;
         private readonly IUserService _userService;
 
-        public AuthService(ISessionRepository sessionRepository, IUserService userService)
+        public AuthService(ISessionService sessionService, IUserService userService)
         {
-            _sessionRepository = sessionRepository;
+            _sessionService = sessionService;
             _userService = userService;
         }
 
@@ -26,14 +26,14 @@ namespace AuthorizationService.Business
                 return new LoginResult { IsAuth = false };
             }
 
-            var session = _sessionRepository.CreateSession(user.Id, 900, ip);
+            var session = _sessionService.CreateSession(user.Id, 900, ip);
 
             return new LoginResult { IsAuth = true, Ticket  = session.Ticket };
         }
 
         public AuthResult CheckToken(string token, IEnumerable<Role> roles)
         {
-            var session = _sessionRepository.GetSessionByTicket(token);
+            var session = _sessionService.GetSessionByTicket(token);
 
             if (session == null)
             {
@@ -72,7 +72,7 @@ namespace AuthorizationService.Business
 
             if (checkTokenResult.StatusCode == 200 && checkTokenResult.SessionId.HasValue)
             {
-                _sessionRepository.ProlongSession(checkTokenResult.SessionId.Value);
+                _sessionService.ProlongSession(checkTokenResult.SessionId.Value);
             }
 
             return checkTokenResult;

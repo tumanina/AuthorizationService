@@ -123,6 +123,49 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         }
 
         [TestMethod]
+        public void GetSessionByTicket_SessionExisted_ShouldReturnCorrect()
+        {
+            SessionRepository.ResetCalls();
+
+            var id = Guid.NewGuid();
+            var userId = Guid.NewGuid();
+            var ticket = Guid.NewGuid().ToString();
+            var interval = 1100;
+            var ip = "127.0.0.3";
+
+            var session = new Repositories.Entities.Session { Id = id, UserId = userId, IP = ip, Ticket = ticket, UpdateExpireInc = interval };
+
+            SessionRepository.Setup(x => x.GetSessionByTicket(ticket)).Returns(session);
+
+            var service = new SessionService(SessionRepository.Object);
+
+            var result = service.GetSessionByTicket(ticket);
+
+            SessionRepository.Verify(x => x.GetSessionByTicket(ticket), Times.Once);
+            Assert.AreEqual(result.UserId, userId);
+            Assert.AreEqual(result.UpdateExpireInc, interval);
+            Assert.AreEqual(result.IP, ip);
+            Assert.AreEqual(result.Id, id);
+        }
+
+        [TestMethod]
+        public void GetSessionByTicket_SessionNotExisted_ShouldReturnNull()
+        {
+            SessionRepository.ResetCalls();
+
+            var ticket = Guid.NewGuid().ToString();
+
+            SessionRepository.Setup(x => x.GetSessionByTicket(ticket)).Returns((Repositories.Entities.Session)null);
+
+            var service = new SessionService(SessionRepository.Object);
+
+            var result = service.GetSessionByTicket(ticket);
+
+            SessionRepository.Verify(x => x.GetSessionByTicket(ticket), Times.Once);
+            Assert.AreEqual(result, null);
+        }
+
+        [TestMethod]
         public void CreateSession_Success_ShouldReturnSession()
         {
             SessionRepository.ResetCalls();
