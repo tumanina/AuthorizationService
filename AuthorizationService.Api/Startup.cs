@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace AuthorizationService.Api
 {
@@ -26,10 +27,7 @@ namespace AuthorizationService.Api
             var dbOptions = new DbContextOptionsBuilder<AuthDBContext>();
             dbOptions.UseSqlServer(connectionString);
             services.AddSingleton<IAuthDBContextFactory>(t => new AuthDBContextFactory(dbOptions));
-
-
             services.AddSingleton<IAuthDBContext, AuthDBContext>();
-
             services.AddSingleton<ISessionRepository, SessionRepository>();
             services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSingleton<ISessionService, SessionService>();
@@ -37,6 +35,21 @@ namespace AuthorizationService.Api
             services.AddSingleton<IAuthService, AuthService>();
 
             services.AddMvc();
+
+            services.AddMvcCore().AddJsonFormatters();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "Authorization API", Version = "v1" });
+                c.DescribeAllEnumsAsStrings();
+                c.AddSecurityDefinition("Default", new ApiKeyScheme
+                {
+                    Description = "Authorization header Example: \"Authorization: {token}\"",
+                    Name = "Authorization",
+                    In = "header",
+                    Type = "apiKey"
+                });
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -45,6 +58,14 @@ namespace AuthorizationService.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "MultiWallet Admin V1");
+            });
+
 
             app.UseMvc(routes =>
             {
