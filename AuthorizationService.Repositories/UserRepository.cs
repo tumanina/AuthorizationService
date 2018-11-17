@@ -47,7 +47,7 @@ namespace AuthorizationService.Repositories
             }
         }
 
-        public IEnumerable<Guid> GetUserRoles(Guid id)
+        public IEnumerable<int> GetUserRoles(Guid id)
         {
             using (var context = _factory.CreateDBContext())
             {
@@ -142,7 +142,7 @@ namespace AuthorizationService.Repositories
             }
         }
 
-        public void UpdateRoles(Guid id, IEnumerable<Guid> roleIds)
+        public void UpdateRoles(Guid id, IEnumerable<int> roleIds)
         {
             using (var context = _factory.CreateDBContext())
             {

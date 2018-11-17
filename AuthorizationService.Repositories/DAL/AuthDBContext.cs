@@ -9,7 +9,6 @@ namespace AuthorizationService.Repositories.DAL
         {
         }
 
-        public DbSet<Role> Role { get; set; }
         public DbSet<UserRole> UserRole { get; set; }
         public DbSet<Session> UserSession { get; set; }
         public DbSet<User> User { get; set; }
@@ -17,15 +16,6 @@ namespace AuthorizationService.Repositories.DAL
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-
-            builder.Entity<Role>(b =>
-            {
-                b.HasKey(u => u.Id);
-                b.Property(t => t.Id).HasColumnName("Id");
-                b.Property(t => t.Name).HasColumnName("Name");
-                b.Property(t => t.Description).HasColumnName("Description");
-                b.ToTable("Role");
-            });
 
             builder.Entity<User>(b =>
             {

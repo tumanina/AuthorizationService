@@ -61,7 +61,7 @@ namespace AuthorizationService.Business
             return user == null ? null : new User(user);
         }
 
-        public IEnumerable<Guid> GetUserRoles(Guid id)
+        public IEnumerable<int> GetUserRoles(Guid id)
         {
             return _userRepository.GetUserRoles(id);
         }
@@ -118,7 +118,7 @@ namespace AuthorizationService.Business
             return updatedUser == null ? null : new User(updatedUser);
         }
 
-        public void UpdateRoles(Guid id, IEnumerable<Guid> roleIds)
+        public void UpdateRoles(Guid id, IEnumerable<int> roleIds)
         {
             _userRepository.UpdateRoles(id, roleIds);
         }

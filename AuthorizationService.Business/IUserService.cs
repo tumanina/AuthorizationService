@@ -11,12 +11,12 @@ namespace AuthorizationService.Business
         User CheckUser(string userName, string password);
         User GetUserByName(string name);
         User GetUserByEmail(string email);
-        IEnumerable<Guid> GetUserRoles(Guid id);
+        IEnumerable<int> GetUserRoles(Guid id);
         IEnumerable<Session> GetSessions(Guid userId, bool isActive = true);
         User CreateUser(string email, string userName, string password);
         bool ChangePassword(Guid id, string newPassword);
         User UpdateUser(Guid id, string email, string userName);
         User UpdateActive(Guid id, bool isActive);
-        void UpdateRoles(Guid id, IEnumerable<Guid> roleIds);
+        void UpdateRoles(Guid id, IEnumerable<int> roleIds);
     }
 }

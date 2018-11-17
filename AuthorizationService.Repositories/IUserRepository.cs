@@ -10,11 +10,11 @@ namespace AuthorizationService.Repositories
         User GetUser(Guid id);
         User GetUserByName(string name);
         User GetUserByEmail(string email);
-        IEnumerable<Guid> GetUserRoles(Guid id);
+        IEnumerable<int> GetUserRoles(Guid id);
         User CreateUser(string email, string userName, string password, string salt);
         User UpdateUser(Guid id, string email, string userName);
         User UpdateActive(Guid id, bool isActive);
         bool ChangePassword(Guid id, string password, string salt);
-        void UpdateRoles(Guid id, IEnumerable<Guid> roleIds);
+        void UpdateRoles(Guid id, IEnumerable<int> roleIds);
     }
 }

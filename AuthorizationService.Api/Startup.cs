@@ -34,6 +34,7 @@ namespace AuthorizationService.Api
             services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSingleton<ISessionService, SessionService>();
             services.AddSingleton<IUserService, UserService>();
+            services.AddSingleton<IAuthService, AuthService>();
 
             services.AddMvc();
         }

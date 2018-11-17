@@ -409,11 +409,11 @@ namespace AuthorizationService.Unit.Tests
             var userId1 = Guid.NewGuid();
             var userId2 = Guid.NewGuid();
             var userId3 = Guid.NewGuid();
-            var roleId1 = Guid.NewGuid();
-            var roleId2 = Guid.NewGuid();
-            var roleId3 = Guid.NewGuid();
-            var roleId4 = Guid.NewGuid();
-            var roleId5 = Guid.NewGuid();
+            var roleId1 = 1;
+            var roleId2 = 2;
+            var roleId3 = 3;
+            var roleId4 = 4;
+            var roleId5 = 5;
 
             var data = new List<Repositories.Entities.UserRole>
             {
@@ -473,10 +473,10 @@ namespace AuthorizationService.Unit.Tests
             var userId1 = Guid.NewGuid();
             var userId2 = Guid.NewGuid();
             var userId3 = Guid.NewGuid();
-            var roleId2 = Guid.NewGuid();
-            var roleId3 = Guid.NewGuid();
-            var roleId4 = Guid.NewGuid();
-            var roleId5 = Guid.NewGuid();
+            var roleId2 = 2;
+            var roleId3 = 3;
+            var roleId4 = 4;
+            var roleId5 = 5;
 
             var data = new List<Repositories.Entities.UserRole>
             {
@@ -854,11 +854,11 @@ namespace AuthorizationService.Unit.Tests
             var userId1 = Guid.NewGuid();
             var userId2 = Guid.NewGuid();
             var userId3 = Guid.NewGuid();
-            var roleId1 = Guid.NewGuid();
-            var roleId2 = Guid.NewGuid();
-            var roleId3 = Guid.NewGuid();
-            var roleId4 = Guid.NewGuid();
-            var roleId5 = Guid.NewGuid();
+            var roleId1 = 1;
+            var roleId2 = 2;
+            var roleId3 = 3;
+            var roleId4 = 4;
+            var roleId5 = 5;
 
             var addedRoles = new List<Repositories.Entities.UserRole>();
             var removedRoles = new List<Repositories.Entities.UserRole>();
@@ -889,7 +889,7 @@ namespace AuthorizationService.Unit.Tests
 
             var repository = new UserRepository(AuthDBContextFactory.Object);
 
-            repository.UpdateRoles(userId1, new List<Guid> { roleId2, roleId5 });
+            repository.UpdateRoles(userId1, new List<int> { roleId2, roleId5 });
 
             mockSet.Verify(x => x.Add(It.IsAny<Repositories.Entities.UserRole>()), Times.Exactly(1));
             mockSet.Verify(x => x.Remove(It.IsAny<Repositories.Entities.UserRole>()), Times.Exactly(2));
@@ -911,10 +911,10 @@ namespace AuthorizationService.Unit.Tests
             var userId1 = Guid.NewGuid();
             var userId2 = Guid.NewGuid();
             var userId3 = Guid.NewGuid();
-            var roleId2 = Guid.NewGuid();
-            var roleId3 = Guid.NewGuid();
-            var roleId4 = Guid.NewGuid();
-            var roleId5 = Guid.NewGuid();
+            var roleId2 = 2;
+            var roleId3 = 3;
+            var roleId4 = 4;
+            var roleId5 = 5;
 
             var addedRoles = new List<Repositories.Entities.UserRole>();
             var removedRoles = new List<Repositories.Entities.UserRole>();
@@ -943,7 +943,7 @@ namespace AuthorizationService.Unit.Tests
 
             var repository = new UserRepository(AuthDBContextFactory.Object);
 
-            repository.UpdateRoles(userId3, new List<Guid> { roleId2, roleId5 });
+            repository.UpdateRoles(userId3, new List<int> { roleId2, roleId5 });
 
             mockSet.Verify(x => x.Add(It.IsAny<Repositories.Entities.UserRole>()), Times.Exactly(2));
             mockSet.Verify(x => x.Remove(It.IsAny<Repositories.Entities.UserRole>()), Times.Never);
@@ -963,10 +963,10 @@ namespace AuthorizationService.Unit.Tests
 
             var userId1 = Guid.NewGuid();
             var userId2 = Guid.NewGuid();
-            var roleId2 = Guid.NewGuid();
-            var roleId3 = Guid.NewGuid();
-            var roleId4 = Guid.NewGuid();
-            var roleId5 = Guid.NewGuid();
+            var roleId2 = 2;
+            var roleId3 = 3;
+            var roleId4 = 4;
+            var roleId5 = 5;
 
             var addedRoles = new List<Repositories.Entities.UserRole>();
             var removedRoles = new List<Repositories.Entities.UserRole>();
@@ -995,7 +995,7 @@ namespace AuthorizationService.Unit.Tests
 
             var repository = new UserRepository(AuthDBContextFactory.Object);
 
-            repository.UpdateRoles(userId2, new List<Guid> { roleId2, roleId5 });
+            repository.UpdateRoles(userId2, new List<int> { roleId2, roleId5 });
 
             mockSet.Verify(x => x.Add(It.IsAny<Repositories.Entities.UserRole>()), Times.Never);
             mockSet.Verify(x => x.Remove(It.IsAny<Repositories.Entities.UserRole>()), Times.Once);
@@ -1014,10 +1014,10 @@ namespace AuthorizationService.Unit.Tests
 
             var userId1 = Guid.NewGuid();
             var userId2 = Guid.NewGuid();
-            var roleId2 = Guid.NewGuid();
-            var roleId3 = Guid.NewGuid();
-            var roleId4 = Guid.NewGuid();
-            var roleId5 = Guid.NewGuid();
+            var roleId2 = 2;
+            var roleId3 = 3;
+            var roleId4 = 4;
+            var roleId5 = 5;
 
             var addedRoles = new List<Repositories.Entities.UserRole>();
             var removedRoles = new List<Repositories.Entities.UserRole>();
@@ -1047,7 +1047,7 @@ namespace AuthorizationService.Unit.Tests
 
             var repository = new UserRepository(AuthDBContextFactory.Object);
 
-            repository.UpdateRoles(userId1, new List<Guid> { roleId2, roleId3, roleId4 });
+            repository.UpdateRoles(userId1, new List<int> { roleId2, roleId3, roleId4 });
 
             mockSet.Verify(x => x.Add(It.IsAny<Repositories.Entities.UserRole>()), Times.Never);
             mockSet.Verify(x => x.Remove(It.IsAny<Repositories.Entities.UserRole>()), Times.Never);

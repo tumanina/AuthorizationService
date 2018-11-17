@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\V1\Models\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
