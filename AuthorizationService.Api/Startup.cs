@@ -10,6 +10,8 @@ using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 using NLog.Web;
 using Swashbuckle.AspNetCore.Swagger;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Collections.Generic;
 
 namespace AuthorizationService.Api
 {
@@ -43,13 +45,14 @@ namespace AuthorizationService.Api
             {
                 c.SwaggerDoc("v1", new Info { Title = "Authorization API", Version = "v1" });
                 c.DescribeAllEnumsAsStrings();
-                c.AddSecurityDefinition("Default", new ApiKeyScheme
+                c.AddSecurityDefinition("Bearer", new ApiKeyScheme
                 {
                     Description = "Authorization header Example: \"Authorization: {token}\"",
                     Name = "Authorization",
                     In = "header",
                     Type = "apiKey"
                 });
+                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>> { { "Bearer", new string[] { } } });
             });
 
             var serviceProvider = services.BuildServiceProvider();
