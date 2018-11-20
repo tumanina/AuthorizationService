@@ -22,7 +22,7 @@ namespace AuthorizationService.Unit.Tests.Authorization
         [TestMethod]
         public void OnAuthorization_TokenExistAndValid_Correct()
         {
-            AuthService.ResetCalls();
+            AuthService.Invocations.Clear();
 
             var userid = Guid.NewGuid();
             var sessionId = Guid.NewGuid();
@@ -51,7 +51,7 @@ namespace AuthorizationService.Unit.Tests.Authorization
         [TestMethod]
         public void OnAuthorization_TokenNotSpecified_ReturnUnauthorized()
         {
-            AuthService.ResetCalls();
+            AuthService.Invocations.Clear();
 
             var userid = Guid.NewGuid();
             var sessionId = Guid.NewGuid();
@@ -78,7 +78,7 @@ namespace AuthorizationService.Unit.Tests.Authorization
         [TestMethod]
         public void OnAuthorization_ServiceReturnUnauthorized_ReturnUnauthorized()
         {
-            AuthService.ResetCalls();
+            AuthService.Invocations.Clear();
 
             var token = Guid.NewGuid().ToString();
             var authMessage = "some unauthorized error";
@@ -106,7 +106,7 @@ namespace AuthorizationService.Unit.Tests.Authorization
         [TestMethod]
         public void OnAuthorization_ServiceReturnForbidden_ReturnForbidden()
         {
-            AuthService.ResetCalls();
+            AuthService.Invocations.Clear();
 
             var token = Guid.NewGuid().ToString();
             var authMessage = "some unauthorized error";

@@ -6,6 +6,7 @@ using User = AuthorizationService.Api.Areas.V1.Models.User;
 using AuthorizationService.Business;
 using System.Linq;
 using AuthorizationService.Api.Authorization;
+using Microsoft.Extensions.Logging;
 
 namespace AuthorizationService.Api.Areas.V1.Controllers
 {
@@ -22,7 +23,7 @@ namespace AuthorizationService.Api.Areas.V1.Controllers
         /// <summary>
         /// Initialization.
         /// </summary>
-        public UsersController(IUserService userService) : base()
+        public UsersController(IUserService userService, ILogger<UsersController> logger) : base(logger)
         {
             _userService = userService;
         }
@@ -43,8 +44,7 @@ namespace AuthorizationService.Api.Areas.V1.Controllers
                     return BadRequest();
                 }
 
-                var user = !string.IsNullOrEmpty(name) ? _userService.GetUserByName(name) 
-                    : (!string.IsNullOrEmpty(email) ?_userService.GetUserByEmail(email) : null);
+                var user = !string.IsNullOrEmpty(name) ? _userService.GetUserByName(name) : (!string.IsNullOrEmpty(email) ?_userService.GetUserByEmail(email) : null);
 
                 if (user == null)
                 {
@@ -252,7 +252,6 @@ namespace AuthorizationService.Api.Areas.V1.Controllers
             try
             {
                 var result = _userService.ChangePassword(id, newPassword);
-
                 return Ok(result);
             }
             catch (Exception ex)
@@ -273,7 +272,6 @@ namespace AuthorizationService.Api.Areas.V1.Controllers
             try
             {
                 var result = _userService.UpdateActive(id, false);
-
                 if (result == null)
                 {
                     return NotFound();

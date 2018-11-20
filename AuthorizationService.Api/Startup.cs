@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using NLog.Extensions.Logging;
+using NLog.Web;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace AuthorizationService.Api
@@ -19,7 +22,6 @@ namespace AuthorizationService.Api
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             var connectionString = Configuration.GetConnectionString("AuthDBConnectionString");
@@ -35,7 +37,6 @@ namespace AuthorizationService.Api
             services.AddSingleton<IAuthService, AuthService>();
 
             services.AddMvc();
-
             services.AddMvcCore().AddJsonFormatters();
 
             services.AddSwaggerGen(c =>
@@ -50,9 +51,15 @@ namespace AuthorizationService.Api
                     Type = "apiKey"
                 });
             });
+
+            var serviceProvider = services.BuildServiceProvider();
+            services.AddLogging((builder) => builder.SetMinimumLevel(LogLevel.Warning));
+            var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
+            loggerFactory.AddNLog(new NLogProviderOptions { CaptureMessageTemplates = true, CaptureMessageProperties = true });
+            NLog.LogManager.LoadConfiguration("nlog.config");
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -63,9 +70,11 @@ namespace AuthorizationService.Api
 
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "MultiWallet Admin V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Authorization Service V1");
             });
 
+            loggerFactory.AddNLog();
+            env.ConfigureNLog("nlog.config");
 
             app.UseMvc(routes =>
             {

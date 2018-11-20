@@ -21,7 +21,7 @@ namespace AuthorizationService.Api.Areas.V1.Controllers
         /// <summary>
         /// Initialisation.
         /// </summary>
-        public SessionsController(ISessionService sessionService) : base()
+        public SessionsController(ISessionService sessionService, ILogger<SessionsController> logger) : base(logger)
         {
             _sessionService = sessionService;
         }
@@ -36,7 +36,6 @@ namespace AuthorizationService.Api.Areas.V1.Controllers
             try
             {
                 var sessions = _sessionService.GetActiveSessions();
-
                 return Ok(sessions.Select(t => new Session(t)));
             }
             catch (Exception ex)
@@ -56,7 +55,6 @@ namespace AuthorizationService.Api.Areas.V1.Controllers
             try
             {
                 var session = _sessionService.GetSession(id);
-
                 if (session == null)
                 {
                     return NotFound();
@@ -82,7 +80,6 @@ namespace AuthorizationService.Api.Areas.V1.Controllers
             try
             {
                 var result = _sessionService.CloseSession(id);
-
                 if (result == null)
                 {
                     return NotFound();
@@ -108,7 +105,6 @@ namespace AuthorizationService.Api.Areas.V1.Controllers
             try
             {
                 var result = _sessionService.CloseSessions(userId);
-
                 if (result == null)
                 {
                     return NotFound();

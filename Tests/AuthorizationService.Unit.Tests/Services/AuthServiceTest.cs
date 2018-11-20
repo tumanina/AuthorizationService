@@ -16,8 +16,8 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void Login_UserNameAndPasswordExist_ReturnSuccess()
         {
-            SessionService.ResetCalls();
-            UserService.ResetCalls();
+            SessionService.Invocations.Clear();
+            UserService.Invocations.Clear();
 
             var userName = "userName1";
             var password = "password1";
@@ -63,8 +63,8 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void Login_CheckUserFailed_ReturnFailed()
         {
-            SessionService.ResetCalls();
-            UserService.ResetCalls();
+            SessionService.Invocations.Clear();
+            UserService.Invocations.Clear();
 
             var userName = "userName1";
             var password = "password1";
@@ -94,8 +94,8 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void CheckTokenWithoutRoles_TokenValid_ReturnOk()
         {
-            SessionService.ResetCalls();
-            UserService.ResetCalls();
+            SessionService.Invocations.Clear();
+            UserService.Invocations.Clear();
 
             var ip = "127.0.0.1";
             var email = "email1@mail.ru";
@@ -148,8 +148,8 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void CheckTokenWithoutRoles_TokenValidNoRoles_ReturnOk()
         {
-            SessionService.ResetCalls();
-            UserService.ResetCalls();
+            SessionService.Invocations.Clear();
+            UserService.Invocations.Clear();
 
             var ip = "127.0.0.1";
             var email = "email1@mail.ru";
@@ -198,8 +198,8 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void CheckToken_TokenValid_ReturnOk()
         {
-            SessionService.ResetCalls();
-            UserService.ResetCalls();
+            SessionService.Invocations.Clear();
+            UserService.Invocations.Clear();
 
             var ip = "127.0.0.1";
             var email = "email1@mail.ru";
@@ -253,8 +253,8 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void CheckToken_TokenNotFound_ReturnUnathorized()
         {
-            SessionService.ResetCalls();
-            UserService.ResetCalls();
+            SessionService.Invocations.Clear();
+            UserService.Invocations.Clear();
 
             var ticket = Guid.NewGuid().ToString();
 
@@ -276,8 +276,8 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void CheckToken_SessionExpired_ReturnUnathorized()
         {
-            SessionService.ResetCalls();
-            UserService.ResetCalls();
+            SessionService.Invocations.Clear();
+            UserService.Invocations.Clear();
 
             var ip = "127.0.0.1";
             var userId = Guid.NewGuid();
@@ -307,8 +307,8 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void CheckToken_TokenValidUserIsBlocked_ReturnUnathorized()
         {
-            SessionService.ResetCalls();
-            UserService.ResetCalls();
+            SessionService.Invocations.Clear();
+            UserService.Invocations.Clear();
 
             var ip = "127.0.0.1";
             var id = Guid.NewGuid();
@@ -363,8 +363,8 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void CheckToken_TokenValidForbidenByRole_ReturnForbiden()
         {
-            SessionService.ResetCalls();
-            UserService.ResetCalls();
+            SessionService.Invocations.Clear();
+            UserService.Invocations.Clear();
 
             var ip = "127.0.0.1";
             var id = Guid.NewGuid();
@@ -418,8 +418,8 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void Registrate_TokenValid_ShouldProlongSession()
         {
-            SessionService.ResetCalls();
-            UserService.ResetCalls();
+            SessionService.Invocations.Clear();
+            UserService.Invocations.Clear();
 
             var ip = "127.0.0.1";
             var email = "email1@mail.ru";
@@ -474,8 +474,8 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void Registrate_TokenExpired_ShouldNotProlongSessionReturnUnathorized()
         {
-            SessionService.ResetCalls();
-            UserService.ResetCalls();
+            SessionService.Invocations.Clear();
+            UserService.Invocations.Clear();
 
             var ip = "127.0.0.1";
             var id = Guid.NewGuid();

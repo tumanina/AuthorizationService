@@ -15,11 +15,12 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
     public class SessionsControllerTests
     {
         private static readonly Mock<ISessionService> SessionService = new Mock<ISessionService>();
+        private static readonly Mock<ILogger<SessionsController>> Logger = new Mock<ILogger<SessionsController>>();
 
         [TestMethod]
         public void GetActive_SessionsExisted_ReturnOk()
         {
-            SessionService.ResetCalls();
+            SessionService.Invocations.Clear();
 
             var id1 = Guid.NewGuid();
             var id2 = Guid.NewGuid();
@@ -53,11 +54,11 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
                 new Session { Id = id3, UserId = userId3, IP = ip3, Ticket = ticket3, UpdateExpireInc = interval3, CreatedDate = createDate3, LastAccessDate = lastAccessDate3, ExpiredDate = expireDate3 }
             });
 
-            var controller = new SessionsController(SessionService.Object);
+            var controller = new SessionsController(SessionService.Object, Logger.Object);
 
             var actionResult = controller.GetActive();
             var result = actionResult as OkObjectResult;
-            var pagedResult = result.Value as IEnumerable<AuthorizationService.Api.Areas.V1.Models.Session>;
+            var pagedResult = result.Value as IEnumerable<Api.Areas.V1.Models.Session>;
 
             SessionService.Verify(x => x.GetActiveSessions(), Times.Once);
             Assert.AreEqual(result.StatusCode, 200);
@@ -70,11 +71,11 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void GetActive_SessionsNotExisted_ReturnCorrect()
         {
-            SessionService.ResetCalls();
+            SessionService.Invocations.Clear();
 
             SessionService.Setup(x => x.GetActiveSessions()).Returns(new List<Session>());
 
-            var controller = new SessionsController(SessionService.Object);
+            var controller = new SessionsController(SessionService.Object, Logger.Object);
 
             var actionResult = controller.GetActive();
             var result = actionResult as OkObjectResult;
@@ -88,7 +89,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void GetSession_SessionExisted_ReturnOk()
         {
-            SessionService.ResetCalls();
+            SessionService.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var userId = Guid.NewGuid();
@@ -97,7 +98,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
             SessionService.Setup(x => x.GetSession(id)).Returns(new Session { Id = id, UserId = userId, IP = ip, UpdateExpireInc = interval } );
 
-            var controller = new SessionsController(SessionService.Object);
+            var controller = new SessionsController(SessionService.Object, Logger.Object);
 
             var actionResult = controller.GetById(id);
             var result = actionResult as OkObjectResult;
@@ -114,13 +115,13 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void GetSession_SessionNotExisted_ReturnNotFound()
         {
-            SessionService.ResetCalls();
+            SessionService.Invocations.Clear();
 
             var id = Guid.NewGuid();
 
             SessionService.Setup(x => x.GetSession(id)).Returns((Session) null);
 
-            var controller = new SessionsController(SessionService.Object);
+            var controller = new SessionsController(SessionService.Object, Logger.Object);
 
             var actionResult = controller.GetById(id);
             var result = actionResult as OkObjectResult;
@@ -134,14 +135,14 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void GetSession_ServiceReturnException_ReturnInternalServerError()
         {
-            SessionService.ResetCalls();
+            SessionService.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var exceptionMessage = "some exception message";
 
             SessionService.Setup(x => x.GetSession(id)).Throws(new Exception(exceptionMessage));
 
-            var controller = new SessionsController(SessionService.Object);
+            var controller = new SessionsController(SessionService.Object, Logger.Object);
 
             var actionResult = controller.GetById(id);
             var result = actionResult as OkObjectResult;
@@ -157,7 +158,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void CloseSession_SessionExisted_ReturnCorrect()
         {
-            SessionService.ResetCalls();
+            SessionService.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var userId = Guid.NewGuid();
@@ -168,7 +169,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
             SessionService.Setup(x => x.CloseSession(id)).Returns(session);
 
-            var controller = new SessionsController(SessionService.Object);
+            var controller = new SessionsController(SessionService.Object, Logger.Object);
 
             var actionResult = controller.CloseSession(id);
 
@@ -186,13 +187,13 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void CloseSession_SessionNotExisted_ReturnCorrect()
         {
-            SessionService.ResetCalls();
+            SessionService.Invocations.Clear();
 
             var id = Guid.NewGuid();
 
             SessionService.Setup(x => x.CloseSession(id)).Returns((Session)null);
 
-            var controller = new SessionsController(SessionService.Object);
+            var controller = new SessionsController(SessionService.Object, Logger.Object);
 
             var actionResult = controller.CloseSession(id);
 
@@ -205,7 +206,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void CloseSession_ServiceReturnException_ReturnInternalServerError()
         {
-            SessionService.ResetCalls();
+            SessionService.Invocations.Clear();
 
             var id = Guid.NewGuid();
 
@@ -213,7 +214,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
             SessionService.Setup(x => x.CloseSession(id)).Throws(new Exception(exceptionMessage));
 
-            var controller = new SessionsController(SessionService.Object);
+            var controller = new SessionsController(SessionService.Object, Logger.Object);
 
             var actionResult = controller.CloseSession(id);
 

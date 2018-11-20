@@ -19,7 +19,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void Login_AuthSuccess_ReturnOkTicket()
         {
-            AuthService.ResetCalls();
+            AuthService.Invocations.Clear();
 
             var userName = "name1";
             var password = "password1";
@@ -28,7 +28,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
             AuthService.Setup(x => x.Login(userName, password, ip)).Returns(new LoginResult { IsAuth  = true, Ticket = ticket });
 
-            var controller = new LoginController(AuthService.Object);
+            var controller = new LoginController(AuthService.Object, Logger.Object);
 
             var actionResult = controller.Login(new LoginRequest { UserName = userName, Password = password, IP = ip });
             var result = actionResult as OkObjectResult;
@@ -41,7 +41,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void Login_AuthFailed_ReturnUnauthorized()
         {
-            AuthService.ResetCalls();
+            AuthService.Invocations.Clear();
 
             var userName = "name1";
             var password = "password1";
@@ -49,7 +49,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
             AuthService.Setup(x => x.Login(userName, password, ip)).Returns(new LoginResult { IsAuth = false });
 
-            var controller = new LoginController(AuthService.Object);
+            var controller = new LoginController(AuthService.Object, Logger.Object);
 
             var actionResult = controller.Login(new LoginRequest { UserName = userName, Password = password, IP = ip });
             var result = actionResult as OkObjectResult;
@@ -65,7 +65,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void Login_RequestNull_ReturnBadRequest()
         {
-            AuthService.ResetCalls();
+            AuthService.Invocations.Clear();
 
             var userName = "name1";
             var password = "password1";
@@ -73,7 +73,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
             AuthService.Setup(x => x.Login(userName, password, ip)).Returns(new LoginResult { IsAuth = false });
 
-            var controller = new LoginController(AuthService.Object);
+            var controller = new LoginController(AuthService.Object, Logger.Object);
 
             var actionResult = controller.Login((LoginRequest) null);
 
@@ -89,7 +89,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void Login_IpAddressHasInvalidFormat_ReturnBadRequest()
         {
-            AuthService.ResetCalls();
+            AuthService.Invocations.Clear();
 
             var userName = "name1";
             var password = "password1";
@@ -98,7 +98,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
             AuthService.Setup(x => x.Login(userName, password, ip)).Returns(new LoginResult { IsAuth = true, Ticket = ticket });
 
-            var controller = new LoginController(AuthService.Object);
+            var controller = new LoginController(AuthService.Object, Logger.Object);
 
             var actionResult = controller.Login(new LoginRequest { UserName = userName, Password = password, IP = ip });
             var result = actionResult as OkObjectResult;
@@ -113,7 +113,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void Login_ServiceReturnException_ReturnInternalServerError()
         {
-            AuthService.ResetCalls();
+            AuthService.Invocations.Clear();
 
             var userName = "name1";
             var password = "password1";
@@ -122,7 +122,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
             AuthService.Setup(x => x.Login(userName, password, ip)).Throws(new Exception(exceptionMessage));
 
-            var controller = new LoginController(AuthService.Object);
+            var controller = new LoginController(AuthService.Object, Logger.Object);
 
             var actionResult = controller.Login(new LoginRequest { UserName = userName, Password = password, IP = ip });
 

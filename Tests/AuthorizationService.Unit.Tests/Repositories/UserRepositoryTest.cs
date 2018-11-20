@@ -18,7 +18,7 @@ namespace AuthorizationService.Unit.Tests
         [TestMethod]
         public void GetUsers_UsersExisted_UseDbContextReturnCorrect()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var mockSet = new Mock<DbSet<Repositories.Entities.User>>();
 
@@ -73,7 +73,7 @@ namespace AuthorizationService.Unit.Tests
         [TestMethod]
         public void GetUsers_UsersNotExisted_UseDbContextReturnCorrect()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var mockSet = new Mock<DbSet<Repositories.Entities.User>>();
 
@@ -98,7 +98,7 @@ namespace AuthorizationService.Unit.Tests
         [TestMethod]
         public void GetUserByName_UserExisted_UseDbContextReturnCorrect()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var mockSet = new Mock<DbSet<Repositories.Entities.User>>();
 
@@ -149,7 +149,7 @@ namespace AuthorizationService.Unit.Tests
         [TestMethod]
         public void GetUsersByName_UserNotExisted_UseDbContextReturnCorrect()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var mockSet = new Mock<DbSet<Repositories.Entities.User>>();
 
@@ -194,7 +194,7 @@ namespace AuthorizationService.Unit.Tests
         [TestMethod]
         public void GetUserByEmail_UserExisted_UseDbContextReturnCorrect()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var mockSet = new Mock<DbSet<Repositories.Entities.User>>();
 
@@ -245,7 +245,7 @@ namespace AuthorizationService.Unit.Tests
         [TestMethod]
         public void GetUsersByEmail_UserNotExisted_UseDbContextReturnCorrect()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var mockSet = new Mock<DbSet<Repositories.Entities.User>>();
 
@@ -290,7 +290,7 @@ namespace AuthorizationService.Unit.Tests
         [TestMethod]
         public void GetUser_UserExisted_UseDbContextReturnCorrect()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var mockSet = new Mock<DbSet<Repositories.Entities.User>>();
 
@@ -349,7 +349,7 @@ namespace AuthorizationService.Unit.Tests
         [TestMethod]
         public void GetUser_UserNotExisted_UseDbContextReturnNull()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var mockSet = new Mock<DbSet<Repositories.Entities.User>>();
 
@@ -394,7 +394,7 @@ namespace AuthorizationService.Unit.Tests
         [TestMethod]
         public void GetUserRoles_UserRolesExisted_UseDbContextReturnCorrect()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var mockSet = new Mock<DbSet<Repositories.Entities.UserRole>>();
 
@@ -459,7 +459,7 @@ namespace AuthorizationService.Unit.Tests
         [TestMethod]
         public void GetUserRoles_UserRolesNorExisted_UseDbContextReturnCorrect()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var mockSet = new Mock<DbSet<Repositories.Entities.UserRole>>();
 
@@ -509,7 +509,7 @@ namespace AuthorizationService.Unit.Tests
         [TestMethod]
         public void CreateUser_Correct_UseDbContextReturnCorrect()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var email = "email1@mail.ru";
@@ -567,7 +567,7 @@ namespace AuthorizationService.Unit.Tests
         [TestMethod]
         public void UpdateUser_UserExisted_UseDbContextReturnCorrect()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var id1 = Guid.NewGuid();
             var id2 = Guid.NewGuid();
@@ -632,7 +632,7 @@ namespace AuthorizationService.Unit.Tests
         [TestMethod]
         public void UpdateUser_UserNotExisted_UseDbContextReturnCorrect()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var id1 = Guid.NewGuid();
             var id2 = Guid.NewGuid();
@@ -684,7 +684,7 @@ namespace AuthorizationService.Unit.Tests
         [TestMethod]
         public void UpdateActive_UserExisted_UseDbContextReturnCorrect()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var id1 = Guid.NewGuid();
             var id2 = Guid.NewGuid();
@@ -746,7 +746,7 @@ namespace AuthorizationService.Unit.Tests
         [TestMethod]
         public void UpdateActive_UserNotExisted_UseDbContextReturnNull()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var id1 = Guid.NewGuid();
             var id2 = Guid.NewGuid();
@@ -795,7 +795,7 @@ namespace AuthorizationService.Unit.Tests
         [TestMethod]
         public void ChangePassword_UserExisted_UseDbContextReturnCorrect()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var id1 = Guid.NewGuid();
             var id2 = Guid.NewGuid();
@@ -847,7 +847,7 @@ namespace AuthorizationService.Unit.Tests
         [TestMethod]
         public void UpdateUserRoles_UserRolesExisted_UseDbContextReturnCorrect()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var mockSet = new Mock<DbSet<Repositories.Entities.UserRole>>();
 
@@ -904,7 +904,7 @@ namespace AuthorizationService.Unit.Tests
         [TestMethod]
         public void UpdateUserRoles_OnlyNewUserRoles_UseDbContextReturnCorrect()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var mockSet = new Mock<DbSet<Repositories.Entities.UserRole>>();
 
@@ -957,7 +957,7 @@ namespace AuthorizationService.Unit.Tests
         [TestMethod]
         public void UpdateUserRoles_OnlyDeletedUserRoles_UseDbContextReturnCorrect()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var mockSet = new Mock<DbSet<Repositories.Entities.UserRole>>();
 
@@ -1008,7 +1008,7 @@ namespace AuthorizationService.Unit.Tests
         [TestMethod]
         public void UpdateUserRoles_SameUserRoles_NoChangesInBD()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var mockSet = new Mock<DbSet<Repositories.Entities.UserRole>>();
 

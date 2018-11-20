@@ -20,7 +20,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void GetUsers_UsersExisted_ShouldReturnCorrect()
         {
-            UserRepository.ResetCalls();
+            UserRepository.Invocations.Clear();
 
             var id1 = Guid.NewGuid();
             var id2 = Guid.NewGuid();
@@ -67,7 +67,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void GetUsers_UsersNotExisted_ShouldReturnCorrect()
         {
-            UserRepository.ResetCalls();
+            UserRepository.Invocations.Clear();
 
             var data = new List<User>();
 
@@ -84,7 +84,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void GetUser_UserExisted_ShouldReturnCorrect()
         {
-            UserRepository.ResetCalls();
+            UserRepository.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var email = "email2@mail.ru";
@@ -116,7 +116,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void GetUser_UserNotExisted_ShouldReturnNull()
         {
-            UserRepository.ResetCalls();
+            UserRepository.Invocations.Clear();
 
             var id = Guid.NewGuid();
 
@@ -133,7 +133,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void GetUsersByName_UsersExisted_ShouldReturnCorrect()
         {
-            UserRepository.ResetCalls();
+            UserRepository.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var email = "email2@mail.ru";
@@ -165,7 +165,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void GetUsersByName_UsersNotExisted_ShouldReturnCorrect()
         {
-            UserRepository.ResetCalls();
+            UserRepository.Invocations.Clear();
             var username = "name1";
  
             UserRepository.Setup(x => x.GetUserByName(username)).Returns((User) null);
@@ -181,7 +181,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void GetUserByEmail_UsersExisted_ShouldReturnCorrect()
         {
-            UserRepository.ResetCalls();
+            UserRepository.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var email = "email2@mail.ru";
@@ -213,7 +213,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void GetUserByEmail_UsersNotExisted_ShouldReturnCorrect()
         {
-            UserRepository.ResetCalls();
+            UserRepository.Invocations.Clear();
 
             var email = "email2@mail.ru";
 
@@ -230,7 +230,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void CheckUser_UsersExisted_ShouldReturnCorrect()
         {
-            UserRepository.ResetCalls();
+            UserRepository.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var email = "email2@mail.ru";
@@ -263,7 +263,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void CheckUser_UsersNotExisted_ShouldReturnCorrect()
         {
-            UserRepository.ResetCalls();
+            UserRepository.Invocations.Clear();
 
             var username = "name1";
             var password = "123654";
@@ -281,7 +281,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void CheckUser_InvalidPassword_ShouldReturnNull()
         {
-            UserRepository.ResetCalls();
+            UserRepository.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var email = "email2@mail.ru";
@@ -307,7 +307,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void GetUserRoles_UserRolesExisted_ShouldReturnCorrect()
         {
-            UserRepository.ResetCalls();
+            UserRepository.Invocations.Clear();
 
             var id1 = Guid.NewGuid();
             var id2 = Guid.NewGuid();
@@ -343,7 +343,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void GetUserRoles_UserRolesNotExisted_ShouldReturnEmptyList()
         {
-            UserRepository.ResetCalls();
+            UserRepository.Invocations.Clear();
 
             var userId = Guid.NewGuid();
 
@@ -359,7 +359,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void GetAllUserSessions_SessionsExisted_ShouldReturnCorrect()
         {
-            SessionRepository.ResetCalls();
+            SessionRepository.Invocations.Clear();
 
             var id1 = Guid.NewGuid();
             var id2 = Guid.NewGuid();
@@ -408,7 +408,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void GetAllUserSessions_SessionsNotExisted_ShouldReturnCorrect()
         {
-            SessionRepository.ResetCalls();
+            SessionRepository.Invocations.Clear();
 
             var userId= Guid.NewGuid();
 
@@ -428,7 +428,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void GetActiveUserSessions_SessionsExisted_ShouldReturnCorrect()
         {
-            SessionRepository.ResetCalls();
+            SessionRepository.Invocations.Clear();
 
             var id1 = Guid.NewGuid();
             var id2 = Guid.NewGuid();
@@ -477,7 +477,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void GetActiveUserSessions_SessionsNotExisted_ShouldReturnCorrect()
         {
-            SessionRepository.ResetCalls();
+            SessionRepository.Invocations.Clear();
 
             var userId= Guid.NewGuid();
 
@@ -497,8 +497,8 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void CreateUser_Success_ShouldReturnUser()
         {
-            UserRepository.ResetCalls();
-            SessionRepository.ResetCalls();
+            UserRepository.Invocations.Clear();
+            SessionRepository.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var email = "email2@mail.ru";
@@ -530,7 +530,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void CreateUser_ServiceReturnNull_ShouldReturnNull()
         {
-            UserRepository.ResetCalls();
+            UserRepository.Invocations.Clear();
 
             var email = "email2@mail.ru";
             var username = "name1";
@@ -549,8 +549,8 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void ChangePassword_UserExisted_ShouldGenerateCorrectHashCloseSession()
         {
-            UserRepository.ResetCalls();
-            SessionRepository.ResetCalls();
+            UserRepository.Invocations.Clear();
+            SessionRepository.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var sessionId1 = Guid.NewGuid();
@@ -602,8 +602,8 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void ChangePassword_UserNotExisted_ShouldGenerateCorrectHashNotCloseSession()
         {
-            UserRepository.ResetCalls();
-            SessionRepository.ResetCalls();
+            UserRepository.Invocations.Clear();
+            SessionRepository.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var sessionId1 = Guid.NewGuid();
@@ -641,7 +641,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void UpdateUser_Success_ShouldReturnUser()
         {
-            UserRepository.ResetCalls();
+            UserRepository.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var salt = "54ythgdh9";
@@ -667,7 +667,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void UpdateUser_UserNotExisted_ShouldReturnNull()
         {
-            UserRepository.ResetCalls();
+            UserRepository.Invocations.Clear();
 
             var id = Guid.NewGuid();
 
@@ -687,7 +687,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void UpdateActive_Success_ShouldReturnUser()
         {
-            UserRepository.ResetCalls();
+            UserRepository.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var salt = "54ythgdh9";
@@ -714,7 +714,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void UpdateActive_ServiceReturnNull_ShouldReturnNull()
         {
-            UserRepository.ResetCalls();
+            UserRepository.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var isActive = true;
@@ -732,7 +732,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void UpdateUserRoles_UserRolesExisted_UseDbContextReturnCorrect()
         {
-            UserRepository.ResetCalls();
+            UserRepository.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var roleId2 = 2;

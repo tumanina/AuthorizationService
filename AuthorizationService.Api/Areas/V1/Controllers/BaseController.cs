@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -7,14 +8,31 @@ namespace AuthorizationService.Api.Areas.V1.Controllers
 {
     public class BaseController: Controller
     {
+        private readonly ILogger<BaseController> _logger;
+
+        /// <summary>
+        /// Initialization.
+        /// </summary>
+        public BaseController(ILogger<BaseController> logger)
+        {
+            _logger = logger;
+        }
+
+        public BaseController()
+        {
+
+        }
+
         protected ObjectResult InternalServerError(Exception ex)
         {
             var message = ex.InnerMessage();
+            _logger.LogError(ex, message);
             return StatusCode(500, message);
         }
 
         protected ObjectResult InternalServerError(string message)
         {
+            _logger.LogError(message);
             return StatusCode(500, message);
         }
 

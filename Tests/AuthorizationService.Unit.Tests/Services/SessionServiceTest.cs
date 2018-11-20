@@ -16,7 +16,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void GetActiveSessions_SessionsExisted_ShouldReturnCorrect()
         {
-            SessionRepository.ResetCalls();
+            SessionRepository.Invocations.Clear();
 
             var id1 = Guid.NewGuid();
             var id2 = Guid.NewGuid();
@@ -66,7 +66,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void GetActiveSessions_SessionsNotExisted_ShouldReturnCorrect()
         {
-            SessionRepository.ResetCalls();
+            SessionRepository.Invocations.Clear();
 
             var data = new List<Repositories.Entities.Session>();
 
@@ -83,7 +83,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void GetSession_SessionExisted_ShouldReturnCorrect()
         {
-            SessionRepository.ResetCalls();
+            SessionRepository.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var userId = Guid.NewGuid();
@@ -108,7 +108,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void GetSession_SessionNotExisted_ShouldReturnNull()
         {
-            SessionRepository.ResetCalls();
+            SessionRepository.Invocations.Clear();
 
             var id = Guid.NewGuid();
 
@@ -125,7 +125,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void GetSessionByTicket_SessionExisted_ShouldReturnCorrect()
         {
-            SessionRepository.ResetCalls();
+            SessionRepository.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var userId = Guid.NewGuid();
@@ -151,7 +151,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void GetSessionByTicket_SessionNotExisted_ShouldReturnNull()
         {
-            SessionRepository.ResetCalls();
+            SessionRepository.Invocations.Clear();
 
             var ticket = Guid.NewGuid().ToString();
 
@@ -168,7 +168,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void CreateSession_Success_ShouldReturnSession()
         {
-            SessionRepository.ResetCalls();
+            SessionRepository.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var userId = Guid.NewGuid();
@@ -193,7 +193,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void CreateSession_ServiceReturnNull_ShouldReturnNull()
         {
-            SessionRepository.ResetCalls();
+            SessionRepository.Invocations.Clear();
 
             var userId = Guid.NewGuid();
             var interval = 1100;
@@ -212,7 +212,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void ProlongSession_Success_ShouldReturnSession()
         {
-            SessionRepository.ResetCalls();
+            SessionRepository.Invocations.Clear();
 
             var id = Guid.NewGuid();
 
@@ -232,7 +232,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void CloseSession_Success_ShouldReturnSession()
         {
-            SessionRepository.ResetCalls();
+            SessionRepository.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var userId = Guid.NewGuid();
@@ -257,7 +257,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void CloseSession_ServiceReturnNull_ShouldReturnNull()
         {
-            SessionRepository.ResetCalls();
+            SessionRepository.Invocations.Clear();
 
             var id = Guid.NewGuid();
 
@@ -274,7 +274,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void CloseUserSessions_SessionsExisted_ShouldReturnSession()
         {
-            SessionRepository.ResetCalls();
+            SessionRepository.Invocations.Clear();
 
             var id1 = Guid.NewGuid();
             var id2 = Guid.NewGuid();
@@ -322,7 +322,7 @@ namespace AuthorizationService.Unit.Tests.ServiceTests
         [TestMethod]
         public void CloseUserSessions_SessionsNotExisted_ShouldReturnEmptyList()
         {
-            SessionRepository.ResetCalls();
+            SessionRepository.Invocations.Clear();
 
             var userId = Guid.NewGuid();
 

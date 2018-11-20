@@ -18,7 +18,7 @@ namespace AuthorizationService.Api.Areas.V1.Controllers
         /// <summary>
         /// Initialization.
         /// </summary>
-        public LoginController(IAuthService authService) : base()
+        public LoginController(IAuthService authService, ILogger<LoginController> logger) : base(logger)
         {
             _authService = authService;
         }

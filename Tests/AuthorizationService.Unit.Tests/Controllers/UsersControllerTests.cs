@@ -19,11 +19,12 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
     public class UsersControllerTests
     {
         private static readonly Mock<IUserService> UserService = new Mock<IUserService>();
+        private static readonly Mock<ILogger<UsersController>> Logger = new Mock<ILogger<UsersController>>();
 
         [TestMethod]
         public void GetUserById_UserExisted_ReturnOk()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var email = "email2@mail.ru";
@@ -35,11 +36,11 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
             UserService.Setup(x => x.GetUser(id)).Returns(new User { Id = id, UserName = username, Email = email, Salt = salt, Password = secret, CreatedDate = createDate, UpdatedDate = updateDate, IsActive = true } );
 
-            var controller = new UsersController(UserService.Object);
+            var controller = new UsersController(UserService.Object, Logger.Object);
 
             var actionResult = controller.GetById(id);
             var result = actionResult as OkObjectResult;
-            var user = result.Value as AuthorizationService.Api.Areas.V1.Models.User;
+            var user = result.Value as Api.Areas.V1.Models.User;
 
             UserService.Verify(x => x.GetUser(id), Times.Once);
             Assert.AreEqual(result.StatusCode, 200);
@@ -54,13 +55,13 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void GetUserById_UserNotExisted_ReturnNotFound()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var id = Guid.NewGuid();
 
             UserService.Setup(x => x.GetUser(id)).Returns((User) null);
 
-            var controller = new UsersController(UserService.Object);
+            var controller = new UsersController(UserService.Object, Logger.Object);
 
             var actionResult = controller.GetById(id);
             var result = actionResult as OkObjectResult;
@@ -74,14 +75,14 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void GetUserById_ServiceReturnException_ReturnInternalServerError()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var exceptionMessage = "some exception message";
 
             UserService.Setup(x => x.GetUser(id)).Throws(new Exception(exceptionMessage));
 
-            var controller = new UsersController(UserService.Object);
+            var controller = new UsersController(UserService.Object, Logger.Object);
 
             var actionResult = controller.GetById(id);
             var result = actionResult as OkObjectResult;
@@ -97,7 +98,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void GetUserByName_UserExisted_ReturnOk()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var email = "email2@mail.ru";
@@ -109,7 +110,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
             UserService.Setup(x => x.GetUserByName(username)).Returns(new User { Id = id, UserName = username, Email = email, Salt = salt, Password = secret, CreatedDate = createDate, UpdatedDate = updateDate, IsActive = true });
 
-            var controller = new UsersController(UserService.Object);
+            var controller = new UsersController(UserService.Object, Logger.Object);
 
             var actionResult = controller.Get(username);
             var result = actionResult as OkObjectResult;
@@ -128,13 +129,13 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void GetUserByName_UserNotExisted_ReturnNotFound()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var username = "name2";
 
             UserService.Setup(x => x.GetUserByName(username)).Returns((User)null);
 
-            var controller = new UsersController(UserService.Object);
+            var controller = new UsersController(UserService.Object, Logger.Object);
 
             var actionResult = controller.Get(username);
             var result = actionResult as OkObjectResult;
@@ -148,14 +149,14 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void GetUserByName_ServiceReturnException_ReturnInternalServerError()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var username = "name2";
             var exceptionMessage = "some exception message";
 
             UserService.Setup(x => x.GetUserByName(username)).Throws(new Exception(exceptionMessage));
 
-            var controller = new UsersController(UserService.Object);
+            var controller = new UsersController(UserService.Object, Logger.Object);
 
             var actionResult = controller.Get(username);
             var result = actionResult as OkObjectResult;
@@ -171,7 +172,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void GetUserByEmail_UserExisted_ReturnOk()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var email = "email2@mail.ru";
@@ -183,7 +184,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
             UserService.Setup(x => x.GetUserByEmail(email)).Returns(new User { Id = id, UserName = username, Email = email, Salt = salt, Password = secret, CreatedDate = createDate, UpdatedDate = updateDate, IsActive = true });
 
-            var controller = new UsersController(UserService.Object);
+            var controller = new UsersController(UserService.Object, Logger.Object);
 
             var actionResult = controller.Get(null, email);
             var result = actionResult as OkObjectResult;
@@ -202,13 +203,13 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void GetUserByEmail_UserNotExisted_ReturnNotFound()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var email = "email2@mail.ru";
 
             UserService.Setup(x => x.GetUserByEmail(email)).Returns((User)null);
 
-            var controller = new UsersController(UserService.Object);
+            var controller = new UsersController(UserService.Object, Logger.Object);
 
             var actionResult = controller.Get(null, email);
             var result = actionResult as OkObjectResult;
@@ -222,14 +223,14 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void GetUserByEmail_ServiceReturnException_ReturnInternalServerError()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var email = "email2@mail.ru";
             var exceptionMessage = "some exception message";
 
             UserService.Setup(x => x.GetUserByEmail(email)).Throws(new Exception(exceptionMessage));
 
-            var controller = new UsersController(UserService.Object);
+            var controller = new UsersController(UserService.Object, Logger.Object);
 
             var actionResult = controller.Get(null, email);
             var result = actionResult as OkObjectResult;
@@ -245,7 +246,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void GetRolesByUserId_UserExisted_ReturnOk()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var email = "email2@mail.ru";
@@ -257,7 +258,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
             UserService.Setup(x => x.GetUser(id)).Returns(new User { Id = id, UserName = username, Email = email, Salt = salt, Password = secret, CreatedDate = createDate, UpdatedDate = updateDate, IsActive = true });
 
-            var controller = new UsersController(UserService.Object);
+            var controller = new UsersController(UserService.Object, Logger.Object);
 
             var actionResult = controller.GetById(id);
             var result = actionResult as OkObjectResult;
@@ -276,13 +277,13 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void GetRolesByUserId_UserNotExisted_ReturnNotFound()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var id = Guid.NewGuid();
 
             UserService.Setup(x => x.GetUser(id)).Returns((User)null);
 
-            var controller = new UsersController(UserService.Object);
+            var controller = new UsersController(UserService.Object, Logger.Object);
 
             var actionResult = controller.GetById(id);
             var result = actionResult as OkObjectResult;
@@ -296,14 +297,14 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void GetRolesByUserId_ServiceReturnException_ReturnInternalServerError()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var exceptionMessage = "some exception message";
 
             UserService.Setup(x => x.GetUser(id)).Throws(new Exception(exceptionMessage));
 
-            var controller = new UsersController(UserService.Object);
+            var controller = new UsersController(UserService.Object, Logger.Object);
 
             var actionResult = controller.GetById(id);
             var result = actionResult as OkObjectResult;
@@ -319,7 +320,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void GetAllUserSessions_SessionsExisted_ShouldReturnCorrect()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var id1 = Guid.NewGuid();
             var id2 = Guid.NewGuid();
@@ -353,7 +354,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
             UserService.Setup(x => x.GetSessions(userId, false)).Returns(data);
 
-            var controller = new UsersController(UserService.Object);
+            var controller = new UsersController(UserService.Object, Logger.Object);
 
             var actionResult = controller.GetSessionsById(userId, false);
             var result = actionResult as OkObjectResult;
@@ -369,7 +370,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void GetAllUserSessions_SessionsNotExisted_ShouldReturnCorrect()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var userId = Guid.NewGuid();
 
@@ -377,7 +378,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
             UserService.Setup(x => x.GetSessions(userId, false)).Returns(data);
 
-            var controller = new UsersController(UserService.Object);
+            var controller = new UsersController(UserService.Object, Logger.Object);
 
             var actionResult = controller.GetSessionsById(userId, false);
             var result = actionResult as OkObjectResult;
@@ -390,7 +391,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void GetActiveUserSessions_SessionsExisted_ShouldReturnCorrect()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var id1 = Guid.NewGuid();
             var id2 = Guid.NewGuid();
@@ -424,7 +425,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
             UserService.Setup(x => x.GetSessions(userId, true)).Returns(data);
 
-            var controller = new UsersController(UserService.Object);
+            var controller = new UsersController(UserService.Object, Logger.Object);
 
             var actionResult = controller.GetSessionsById(userId);
             var result = actionResult as OkObjectResult;
@@ -440,7 +441,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void GetActiveUserSessions_SessionsNotExisted_ShouldReturnCorrect()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var userId= Guid.NewGuid();
 
@@ -448,7 +449,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
             UserService.Setup(x => x.GetSessions(userId, true)).Returns(data);
 
-            var controller = new UsersController(UserService.Object);
+            var controller = new UsersController(UserService.Object, Logger.Object);
 
             var actionResult = controller.GetSessionsById(userId, true);
             var result = actionResult as OkObjectResult;
@@ -461,7 +462,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void GetOwnSessions_SessionsExisted_ShouldReturnCorrect()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var id1 = Guid.NewGuid();
             var id2 = Guid.NewGuid();
@@ -495,7 +496,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
             UserService.Setup(x => x.GetSessions(userId, false)).Returns(data);
 
-            var controller = new UsersController(UserService.Object)
+            var controller = new UsersController(UserService.Object, Logger.Object)
             {
                 ControllerContext = new ControllerContext { HttpContext = new DefaultHttpContext() }
             };
@@ -516,7 +517,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void GetOwnSessions_SessionsNotExisted_ShouldReturnCorrect()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var userId= Guid.NewGuid();
 
@@ -524,7 +525,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
             UserService.Setup(x => x.GetSessions(userId, false)).Returns(data);
 
-            var controller = new UsersController(UserService.Object)
+            var controller = new UsersController(UserService.Object, Logger.Object)
             {
                 ControllerContext = new ControllerContext { HttpContext = new DefaultHttpContext() }
             };
@@ -542,7 +543,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void GetOwnSessions_UserNotAuthorised_ShouldReturnCorrect()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var userId= Guid.NewGuid();
 
@@ -550,7 +551,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
             UserService.Setup(x => x.GetSessions(userId, false)).Returns(data);
 
-            var controller = new UsersController(UserService.Object)
+            var controller = new UsersController(UserService.Object, Logger.Object)
             {
                 ControllerContext = new ControllerContext { HttpContext = new DefaultHttpContext() }
             };
@@ -567,7 +568,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void CreateUser_Success_ReturnCreatedAndCorrect()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var email = "email2@mail.ru";
@@ -587,7 +588,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
             UserService.Setup(x => x.CreateUser(email, username, password)).Returns(user)
             .Callback((string emailParam, string usernameParam, string passwordParam) => { createdEmail = emailParam; createdUsername = usernameParam; createdPassword = passwordParam; });
 
-            var controller = new UsersController(UserService.Object)
+            var controller = new UsersController(UserService.Object, Logger.Object)
             {
                 ControllerContext = new ControllerContext { HttpContext = new DefaultHttpContext() }
             };
@@ -616,7 +617,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void CreateUser_RequestIsEmpty_ReturnBadRequest()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var email = "email2@mail.ru";
@@ -636,7 +637,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
             UserService.Setup(x => x.CreateUser(email, username, password)).Returns(user)
             .Callback((string emailParam, string usernameParam, string passwordParam) => { createdEmail = emailParam; createdUsername = usernameParam; createdPassword = passwordParam; });
 
-            var controller = new UsersController(UserService.Object)
+            var controller = new UsersController(UserService.Object, Logger.Object)
             {
                 ControllerContext = new ControllerContext { HttpContext = new DefaultHttpContext() }
             };
@@ -658,7 +659,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
         public void CreateUser_UserNameIsEmpty_ReturnBadRequest()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var email = "email2@mail.ru";
@@ -674,7 +675,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
             UserService.Setup(x => x.CreateUser(email, username, password)).Returns(user);
 
-            var controller = new UsersController(UserService.Object)
+            var controller = new UsersController(UserService.Object, Logger.Object)
             {
                 ControllerContext = new ControllerContext { HttpContext = new DefaultHttpContext() }
             };
@@ -700,7 +701,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
         public void CreateUser_UserNameTooLong_ReturnBadRequest()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var email = "email2@mail.ru";
@@ -715,7 +716,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
             UserService.Setup(x => x.CreateUser(email, username, password)).Returns(user);
 
-            var controller = new UsersController(UserService.Object)
+            var controller = new UsersController(UserService.Object, Logger.Object)
             {
                 ControllerContext = new ControllerContext { HttpContext = new DefaultHttpContext() }
             };
@@ -742,7 +743,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
         public void CreateUser_PasswordIsEmpty_ReturnBadRequest()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var email = "email2@mail.ru";
@@ -758,7 +759,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
             UserService.Setup(x => x.CreateUser(email, username, password)).Returns(user);
 
-            var controller = new UsersController(UserService.Object)
+            var controller = new UsersController(UserService.Object, Logger.Object)
             {
                 ControllerContext = new ControllerContext { HttpContext = new DefaultHttpContext() }
             };
@@ -784,7 +785,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
         public void CreateUser_EmailIsEmpty_ReturnBadRequest()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var email = "email2@mail.ru";
@@ -800,7 +801,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
             UserService.Setup(x => x.CreateUser(email, username, password)).Returns(user);
 
-            var controller = new UsersController(UserService.Object)
+            var controller = new UsersController(UserService.Object, Logger.Object)
             {
                 ControllerContext = new ControllerContext { HttpContext = new DefaultHttpContext() }
             };
@@ -826,7 +827,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
         public void CreateUser_EmailHasInvalidFormat_ReturnBadRequest()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var email = "email";
@@ -841,7 +842,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
             UserService.Setup(x => x.CreateUser(email, username, password)).Returns(user);
 
-            var controller = new UsersController(UserService.Object)
+            var controller = new UsersController(UserService.Object, Logger.Object)
             {
                 ControllerContext = new ControllerContext { HttpContext = new DefaultHttpContext() }
             };
@@ -869,7 +870,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void CreateUser_ServiceReturnNull_ReturnInternalServerError()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var email = "email2@mail.ru";
             var username = "name1";
@@ -877,7 +878,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
             
             UserService.Setup(x => x.CreateUser(email, username, password)).Returns((User)null);
 
-            var controller = new UsersController(UserService.Object)
+            var controller = new UsersController(UserService.Object, Logger.Object)
             {
                 ControllerContext = new ControllerContext { HttpContext = new DefaultHttpContext() }
             };
@@ -905,7 +906,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void CreateUser_ServiceReturnException_ReturnInternalServerError()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var email = "email2@mail.ru";
             var username = "name1";
@@ -915,7 +916,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
             UserService.Setup(x => x.CreateUser(email, username, password)).Throws(new Exception(exceptionMessage));
 
-            var controller = new UsersController(UserService.Object)
+            var controller = new UsersController(UserService.Object, Logger.Object)
             {
                 ControllerContext = new ControllerContext { HttpContext = new DefaultHttpContext() }
             };
@@ -943,7 +944,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void UpdateUser_Success_ReturnCreatedAndCorrect()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var email = "email2@mail.ru";
@@ -961,7 +962,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
             UserService.Setup(x => x.UpdateUser(id, email, username)).Returns(user)
             .Callback((Guid idParam, string emailParam, string usernameParam) => { createdEmail = emailParam; createdUsername = usernameParam; });
 
-            var controller = new UsersController(UserService.Object);
+            var controller = new UsersController(UserService.Object, Logger.Object);
 
             var actionResult = controller.Put(id, new UpdateUserRequest
             {
@@ -980,7 +981,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void UpdateUser_RequestIsEmpty_ReturnBadRequest()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var email = "email2@mail.ru";
@@ -999,7 +1000,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
             UserService.Setup(x => x.UpdateUser(id, email, username)).Returns(user)
             .Callback((string emailParam, string usernameParam, string passwordParam) => { createdEmail = emailParam; createdUsername = usernameParam; createdPassword = passwordParam; });
 
-            var controller = new UsersController(UserService.Object);
+            var controller = new UsersController(UserService.Object, Logger.Object);
 
             var actionResult = controller.Put(id, (UpdateUserRequest) null);
 
@@ -1014,7 +1015,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void UpdateUser_ServiceReturnNull_ReturnNotFound()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var email = "email2@mail.ru";
@@ -1022,7 +1023,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
             UserService.Setup(x => x.UpdateUser(id, email, username)).Returns((User)null);
 
-            var controller = new UsersController(UserService.Object);
+            var controller = new UsersController(UserService.Object, Logger.Object);
 
             var actionResult = controller.Put(id, new UpdateUserRequest
             {
@@ -1041,7 +1042,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void UpdateUser_ServiceReturnException_ReturnInternalServerError()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var email = "email2@mail.ru";
@@ -1051,7 +1052,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
             UserService.Setup(x => x.UpdateUser(id, email, username)).Throws(new Exception(exceptionMessage));
 
-            var controller = new UsersController(UserService.Object);
+            var controller = new UsersController(UserService.Object, Logger.Object);
 
             var actionResult = controller.Put(id, new UpdateUserRequest
             {
@@ -1070,7 +1071,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void ChangePassword_Success_ReturnCreatedAndCorrect()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var password = "123654";
@@ -1080,7 +1081,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
             UserService.Setup(x => x.ChangePassword(id, password)).Returns(true)
             .Callback((Guid idParam, string passwordParam) => { newPassword = passwordParam; });
 
-            var controller = new UsersController(UserService.Object);
+            var controller = new UsersController(UserService.Object, Logger.Object);
 
             var actionResult = controller.Put(id, password);
 
@@ -1095,14 +1096,14 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void ChangePassword_ServiceReturnFalse_ReturnOkAndFalse()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var password = "123654";
 
             UserService.Setup(x => x.ChangePassword(id, password)).Returns(false);
 
-            var controller = new UsersController(UserService.Object);
+            var controller = new UsersController(UserService.Object, Logger.Object);
 
             var actionResult = controller.Put(id, password);
 
@@ -1116,7 +1117,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void ChangePassword_ServiceReturnException_ReturnInternalServerError()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var password = "123654";
@@ -1125,7 +1126,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
             UserService.Setup(x => x.ChangePassword(id, password)).Throws(new Exception(exceptionMessage));
 
-            var controller = new UsersController(UserService.Object);
+            var controller = new UsersController(UserService.Object, Logger.Object);
 
             var actionResult = controller.Put(id, password);
 
@@ -1140,7 +1141,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void BlockUser_Success_ReturnCreatedAndCorrect()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var email = "email2@mail.ru";
@@ -1154,7 +1155,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
             UserService.Setup(x => x.UpdateActive(id, false)).Returns(user);
 
-            var controller = new UsersController(UserService.Object);
+            var controller = new UsersController(UserService.Object, Logger.Object);
 
             var actionResult = controller.Block(id);
 
@@ -1167,13 +1168,13 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void BlockUser_ServiceReturnNull_ReturnNotFound()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var id = Guid.NewGuid();
 
             UserService.Setup(x => x.UpdateActive(id, false)).Returns((User)null);
 
-            var controller = new UsersController(UserService.Object);
+            var controller = new UsersController(UserService.Object, Logger.Object);
 
             var actionResult = controller.Block(id);
 
@@ -1188,7 +1189,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void BlockUser_ServiceReturnException_ReturnInternalServerError()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var id = Guid.NewGuid();
 
@@ -1196,7 +1197,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
             UserService.Setup(x => x.UpdateActive(id, false)).Throws(new Exception(exceptionMessage));
 
-            var controller = new UsersController(UserService.Object);
+            var controller = new UsersController(UserService.Object, Logger.Object);
 
             var actionResult = controller.Block(id);
 
@@ -1211,7 +1212,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void UnblockUser_Success_ReturnCreatedAndCorrect()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var email = "email2@mail.ru";
@@ -1225,7 +1226,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
             UserService.Setup(x => x.UpdateActive(id, true)).Returns(user);
 
-            var controller = new UsersController(UserService.Object);
+            var controller = new UsersController(UserService.Object, Logger.Object);
 
             var actionResult = controller.UnBlock(id);
 
@@ -1238,13 +1239,13 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void UnblockUser_ServiceReturnNull_ReturnNotFound()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var id = Guid.NewGuid();
 
             UserService.Setup(x => x.UpdateActive(id, true)).Returns((User)null);
 
-            var controller = new UsersController(UserService.Object);
+            var controller = new UsersController(UserService.Object, Logger.Object);
 
             var actionResult = controller.UnBlock(id);
 
@@ -1259,7 +1260,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void UnblockUser_ServiceReturnException_ReturnInternalServerError()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var id = Guid.NewGuid();
 
@@ -1267,7 +1268,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
             UserService.Setup(x => x.UpdateActive(id, true)).Throws(new Exception(exceptionMessage));
 
-            var controller = new UsersController(UserService.Object);
+            var controller = new UsersController(UserService.Object, Logger.Object);
 
             var actionResult = controller.UnBlock(id);
 
@@ -1282,14 +1283,14 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void SetRoles_Success_ReturnCreatedAndCorrect()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var roles = new List<int> { 2,4,5 };
 
             UserService.Setup(x => x.UpdateRoles(id, roles));
 
-            var controller = new UsersController(UserService.Object);
+            var controller = new UsersController(UserService.Object, Logger.Object);
 
             var actionResult = controller.SetRoles(id, roles);
 
@@ -1302,7 +1303,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
         [TestMethod]
         public void SetRoles_ServiceReturnException_ReturnInternalServerError()
         {
-            UserService.ResetCalls();
+            UserService.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var roles = new List<int> { 2, 4, 5 };
@@ -1311,7 +1312,7 @@ namespace AuthorizationService.Unit.Tests.ControllerTests
 
             UserService.Setup(x => x.UpdateRoles(id, roles)).Throws(new Exception(exceptionMessage));
 
-            var controller = new UsersController(UserService.Object);
+            var controller = new UsersController(UserService.Object, Logger.Object);
 
             var actionResult = controller.SetRoles(id, roles);
 

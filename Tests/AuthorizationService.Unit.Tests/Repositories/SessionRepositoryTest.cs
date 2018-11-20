@@ -18,7 +18,7 @@ namespace AuthorizationService.Unit.Tests.RepositoryTests
         [TestMethod]
         public void GetAllActiveSessions_SessionsExisted_UseDbContextReturnCorrect()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var mockSet = new Mock<DbSet<Repositories.Entities.Session>>();
 
@@ -76,7 +76,7 @@ namespace AuthorizationService.Unit.Tests.RepositoryTests
         [TestMethod]
         public void GetAllActiveSessions_SessionsNotExisted_UseDbContextReturnCorrect()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var mockSet = new Mock<DbSet<Repositories.Entities.Session>>();
 
@@ -101,7 +101,7 @@ namespace AuthorizationService.Unit.Tests.RepositoryTests
         [TestMethod]
         public void GetActiveSessionsByUser_ActiveSessionsByUserExisted_UseDbContextReturnCorrect()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var mockSet = new Mock<DbSet<Repositories.Entities.Session>>();
 
@@ -157,7 +157,7 @@ namespace AuthorizationService.Unit.Tests.RepositoryTests
         [TestMethod]
         public void GetActiveSessionsByUser_SessionsByUserNotExisted_UseDbContextReturnCorrect()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var mockSet = new Mock<DbSet<Repositories.Entities.Session>>();
 
@@ -212,7 +212,7 @@ namespace AuthorizationService.Unit.Tests.RepositoryTests
         [TestMethod]
         public void GetUserSessions_UserSessionsExisted_UseDbContextReturnCorrect()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var mockSet = new Mock<DbSet<Repositories.Entities.Session>>();
 
@@ -268,7 +268,7 @@ namespace AuthorizationService.Unit.Tests.RepositoryTests
         [TestMethod]
         public void GetUserSessionsByUser_UserSessionsNotExisted_UseDbContextReturnCorrect()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var mockSet = new Mock<DbSet<Repositories.Entities.Session>>();
 
@@ -323,7 +323,7 @@ namespace AuthorizationService.Unit.Tests.RepositoryTests
         [TestMethod]
         public void GetSession_SessionExisted_UseDbContextReturnCorrect()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var mockSet = new Mock<DbSet<Repositories.Entities.Session>>();
 
@@ -385,7 +385,7 @@ namespace AuthorizationService.Unit.Tests.RepositoryTests
         [TestMethod]
         public void GetSession_SessionNotExisted_UseDbContextReturnNull()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var mockSet = new Mock<DbSet<Repositories.Entities.Session>>();
 
@@ -431,7 +431,7 @@ namespace AuthorizationService.Unit.Tests.RepositoryTests
         [TestMethod]
         public void GetSessionByTicket_SessionExisted_UseDbContextReturnCorrect()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var mockSet = new Mock<DbSet<Repositories.Entities.Session>>();
 
@@ -493,7 +493,7 @@ namespace AuthorizationService.Unit.Tests.RepositoryTests
         [TestMethod]
         public void GetSessionByTicket_SessionNotExisted_UseDbContextReturnNull()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var mockSet = new Mock<DbSet<Repositories.Entities.Session>>();
 
@@ -540,7 +540,7 @@ namespace AuthorizationService.Unit.Tests.RepositoryTests
         [TestMethod]
         public void CreateSession_Correct_UseDbContextReturnCorrect()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var id = Guid.NewGuid();
             var userId = Guid.NewGuid();
@@ -594,7 +594,7 @@ namespace AuthorizationService.Unit.Tests.RepositoryTests
         [TestMethod]
         public void ProlongSession_SessionExisted_UseDbContextReturnCorrect()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var id1 = Guid.NewGuid();
             var id2 = Guid.NewGuid();
@@ -652,7 +652,7 @@ namespace AuthorizationService.Unit.Tests.RepositoryTests
         [TestMethod]
         public void ProlongSession_SessionNotExisted_UseDbContextReturnCorrect()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var id1 = Guid.NewGuid();
             var id2 = Guid.NewGuid();
@@ -703,7 +703,7 @@ namespace AuthorizationService.Unit.Tests.RepositoryTests
         [TestMethod]
         public void CloseSession_SessionExisted_UseDbContextReturnCorrect()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var id1 = Guid.NewGuid();
             var id2 = Guid.NewGuid();
@@ -762,7 +762,7 @@ namespace AuthorizationService.Unit.Tests.RepositoryTests
         [TestMethod]
         public void CloseSession_SessionNotExisted_UseDbContextReturnCorrect()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var id1 = Guid.NewGuid();
             var id2 = Guid.NewGuid();
@@ -813,7 +813,7 @@ namespace AuthorizationService.Unit.Tests.RepositoryTests
         [TestMethod]
         public void CloseSessions_SessionsExisted_UseDbContextReturnCorrect()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var id1 = Guid.NewGuid();
             var id2 = Guid.NewGuid();
@@ -880,7 +880,7 @@ namespace AuthorizationService.Unit.Tests.RepositoryTests
         [TestMethod]
         public void CloseSessions_SessionsNotExisted_UseDbContextReturnCorrect()
         {
-            AuthDBContext.ResetCalls();
+            AuthDBContext.Invocations.Clear();
 
             var id1 = Guid.NewGuid();
             var id3 = Guid.NewGuid();
