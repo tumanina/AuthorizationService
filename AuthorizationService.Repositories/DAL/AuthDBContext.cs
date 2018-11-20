@@ -33,7 +33,7 @@ namespace AuthorizationService.Repositories.DAL
 
             builder.Entity<UserRole>(b =>
             {
-                b.HasKey(u => u.UserId);
+                b.HasKey(u => new { u.UserId, u.RoleId });
                 b.Property(t => t.UserId).HasColumnName("UserId");
                 b.Property(t => t.RoleId).HasColumnName("RoleId");
                 b.ToTable("UserRole");
