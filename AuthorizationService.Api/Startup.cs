@@ -10,7 +10,9 @@ using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 using NLog.Web;
 using Swashbuckle.AspNetCore.Swagger;
-using Swashbuckle.AspNetCore.SwaggerGen;
+using System.IO;
+using System;
+using System.Reflection;
 using System.Collections.Generic;
 
 namespace AuthorizationService.Api
@@ -53,6 +55,9 @@ namespace AuthorizationService.Api
                     Type = "apiKey"
                 });
                 c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>> { { "Bearer", new string[] { } } });
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
 
             var serviceProvider = services.BuildServiceProvider();
